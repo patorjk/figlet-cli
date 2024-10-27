@@ -13,6 +13,8 @@ var figlet = require('figlet'),
     .describe('l', 'List all the available fonts')
     .alias('f', 'font')
     .describe('f', 'A string value that indicates the FIGlet font to use')
+    .alias('ff', 'fontfile')
+    .describe('ff', 'A string value that specifies the FIGlet font file to use')
     .describe('horizontal-layout', 'A string value that indicates the horizontal layout to use')
     .describe('vertical-layout', 'A string value that indicates the vertical layout to use');
 
@@ -42,7 +44,17 @@ if (!text || argv.help) {
     return console.log(optimist.help());
 }
 
+if (argv.font && argv.fontfile) {
+    return console.log('The options --font and --fontfile are mutually exclusive');
+}
+
 if (argv.font) options.font = argv.font
+if (argv.fontfile) {
+    const fs = require('fs');
+    const data = fs.readFileSync(argv.fontfile, 'utf8');
+    figlet.parseFont('customfont', data);
+    options.font = 'customfont';
+}
 if (argv['horizontal-layout']) options.horizontalLayout = argv['horizontal-layout']
 if (argv['vertical-layout']) options.verticalLayout = argv['vertical-layout']
 
