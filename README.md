@@ -40,7 +40,7 @@ figlet -f "Dancing Font" "Hi"
 Following example uses an external font file
 
 ```shell
-figlet -ff .\phm-largetype.flf "Hi"
+figlet --ff .\phm-largetype.flf "Hi"
 ```
 
 ## Goals
