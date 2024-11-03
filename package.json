@@ -1,6 +1,6 @@
 {
     "name": "figlet-cli",
-    "version": "0.1.1",
+    "version": "0.2.0",
     "description": "Command line interface for the FIGlet.js library.",
     "keywords": ["figlet", "ascii", "art", "banner", "ansi"],
     "repository": {
@@ -24,7 +24,7 @@
     },
     "dependencies": {
         "optimist": "~0.6.0",
-        "figlet": "^1.3.0"
+        "figlet": "^1.8.0"
     },
     "devDependencies": {
         "grunt-contrib-jshint": "~0.6.0",

@@ -37,6 +37,12 @@ Below is an example that uses a custom font.
 figlet -f "Dancing Font" "Hi"
 ```
 
+Following example uses an external font file
+
+```shell
+figlet --ff .\phm-largetype.flf "Hi"
+```
+
 ## Goals
 
 Eventually I think it would be nice for this app to have to same command line interface as the C-based app.
