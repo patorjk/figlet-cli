@@ -4,9 +4,21 @@
 
 process.title = 'figlet';
 
+const usage = (() => {
+    let path = require('path');
+
+    let location = require.resolve("figlet");
+    location = path.join(location, "..", "/../fonts/");
+    
+    return [
+        'Usage: $0 "text to print"',
+        `Fonts: ${location}`,
+    ].join('\n\n');
+})();
+
 var figlet = require('figlet'),
     optimist = require('optimist')
-    .usage('Usage: $0 "text to print"')
+    .usage(usage)
     .alias('h', 'help')
     .alias('v', 'version')
     .alias('l', 'list')
