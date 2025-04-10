@@ -28,7 +28,7 @@ var figlet = require('figlet'),
     .alias('f', 'font')
     .describe('f', 'A string value that indicates the FIGlet font to use')
     .alias('ff', 'fontfile')
-    .describe('ff', 'A string value that specifies the FIGlet font file to use')
+    .describe('ff', 'A string value that specifies the FIGlet font file to use. Can be local or URL')
     .describe('horizontal-layout', 'A string value that indicates the horizontal layout to use')
     .describe('vertical-layout', 'A string value that indicates the vertical layout to use');
 
@@ -85,21 +85,67 @@ if (argv.font && argv.fontfile) {
 }
 
 if (argv.font) options.font = argv.font
-if (argv.fontfile) {
-    const fs = require('fs');
-    const data = fs.readFileSync(argv.fontfile, 'utf8');
-    figlet.parseFont('customfont', data);
-    options.font = 'customfont';
-}
-if (argv['horizontal-layout']) options.horizontalLayout = argv['horizontal-layout']
-if (argv['vertical-layout']) options.verticalLayout = argv['vertical-layout']
 
-figlet(text, options, function(err, data) {
-    if (err) {
-        console.log('Something went wrong...');
-        console.dir(err);
-        return;
+new Promise(function(resolve, reject) {
+    if (argv.fontfile) {
+        console.log("DEBUG")
+        const url = require('url');
+        try {
+            const location = new url.URL(argv.fontfile);
+            switch(location.protocol) {
+                case 'http:':
+                case 'https:':
+                    const https = require('https');
+                    https.get(location, (res) => {
+                        let data = '';
+                        res.on('data', (chunk) => {
+                            data += chunk;
+                        });
+                        res.on('end', () => {
+                            figlet.parseFont('customfont', data);
+                            options.font = 'customfont';
+                            resolve();
+                        });
+                        res.on('error', reject);
+                    });
+                    break;
+                case 'file:':
+                    const fs = require('fs');
+                    fs.readFile(location, 'utf8', (err, data) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            figlet.parseFont('customfont', data);
+                            options.font = 'customfont';
+                            resolve();
+                        }
+                    });
+                    break;
+                default:
+                    reject(new Error(`Unsupported protocol: ${location.protocol}`));
+                    break;
+            }
+        } catch (e) {
+            reject(e);
+        }
+    } else {
+        resolve();
     }
-    data = data.replace(/%/g, '%%');
-    console.log(data);
+}).then(function() {
+    if (argv['horizontal-layout']) options.horizontalLayout = argv['horizontal-layout']
+    if (argv['vertical-layout']) options.verticalLayout = argv['vertical-layout']
+    
+    figlet(text, options, function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        data = data.replace(/%/g, '%%');
+        console.log(data);
+    });
+}).catch(function(err) {
+    console.log('Something went wrong...');
+    console.dir(err);
+    return;
 });
