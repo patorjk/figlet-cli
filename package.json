@@ -1,6 +1,6 @@
 {
     "name": "figlet-cli",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "description": "Command line interface for the FIGlet.js library.",
     "keywords": ["figlet", "ascii", "art", "banner", "ansi"],
     "repository": {
