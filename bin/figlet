@@ -88,7 +88,6 @@ if (argv.font) options.font = argv.font
 
 new Promise(function(resolve, reject) {
     if (argv.fontfile) {
-        console.log("DEBUG")
         const url = require('url');
         try {
             const location = new url.URL(argv.fontfile);
@@ -126,7 +125,16 @@ new Promise(function(resolve, reject) {
                     break;
             }
         } catch (e) {
-            reject(e);
+            const fs = require('fs');
+            fs.readFile(argv.fontfile, 'utf8', (err, data) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    figlet.parseFont('customfont', data);
+                    options.font = 'customfont';
+                    resolve();
+                }
+            });
         }
     } else {
         resolve();
