@@ -43,6 +43,12 @@ Following example uses an external font file
 figlet --ff .\phm-largetype.flf "Hi"
 ```
 
+Following example uses an external font file over https (http:// and file:// are also supported)
+
+```shell
+figlet --ff https://raw.githubusercontent.com/anonhostpi/figlet-cli/refs/heads/master/miniwi.flf "Hi"
+```
+
 ## Goals
 
 Eventually I think it would be nice for this app to have to same command line interface as the C-based app.
