@@ -46,7 +46,7 @@ figlet --ff .\phm-largetype.flf "Hi"
 Following example uses an external font file over https (http:// and file:// are also supported)
 
 ```shell
-figlet --ff https://raw.githubusercontent.com/anonhostpi/figlet-cli/refs/heads/master/miniwi.flf "Hi"
+figlet --ff https://raw.githubusercontent.com/patorjk/figlet-cli/refs/heads/master/miniwi.flf "Hi"
 ```
 
 ## Goals
@@ -58,4 +58,6 @@ Eventually I think it would be nice for this app to have to same command line in
 This was originally submitted to [figlet.js](https://github.com/patorjk/figlet.js) by [timhudson](https://github.com/timhudson). It's been broken out as a spearate project so users can control which figlet they want to use on the command line (i.e., so installing the figlet.js library globally wont conflict with the C-based command line figlet app).
 
 ## Release History
-* 2014.01.02 v0.1.0 Initial release.
+* 2025.04.11 v0.3.0 Command line improvements, thanks to @anonhostpi https://github.com/patorjk/figlet-cli/pull/10
+* 2024.11.03 v0.2.0 https://github.com/patorjk/figlet-cli/pull/4 https://github.com/patorjk/figlet-cli/pull/2
+* 2014.01.02 v0.1.0 Initial release
